@@ -28,6 +28,17 @@ def test_proteins_sequence():
     seq = test_protein.sequence
     assert seq == "AAAAA"
 
-def test_proteins_plot():
-    test_protein = proteins.basic.Protein("Test_Name", "AAAAA")
+def test_proteins_find_metric_values():
+    test_protein = proteins.basic.Protein("Test_Name", "AR")
+    metric_values = test_protein.find_metric_values()
+    assert metric_values == [1.8, -4.5]
 
+def test_proteins_calculate_sliding_window():
+    test_protein = proteins.basic.Protein("Test_Name", "ARARA")
+    mean_value = test_protein.calculate_sliding_window()
+    assert mean_value == [1.8, -1.35, -0.30000000000000004, -1.35, -0.7200000000000001]
+
+def test_proteins_create_positions():
+    test_protein = proteins.basic.Protein("Test_Name", "ARARA")
+    pos = test_protein.create_positions()
+    assert pos == [0, 1, 2, 3, 4]

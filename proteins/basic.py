@@ -24,7 +24,7 @@ class Protein(object):
             metric_values.append(self.aa_metrics[metric][aa])
         return metric_values
 
-    def calculate_sliding_window(self, metric, window_size):
+    def calculate_sliding_window(self, metric="hydropathy", window_size=5):
         metric_values = self.find_metric_values(metric)
         window = deque([], maxlen = window_size)
         mean_values = []
