@@ -26,3 +26,9 @@ def test_rand_is_gr():
         [6, 0, 0]
     )
     assert peaks == []
+
+def test_tuple():
+    peaks = peak_finder.basic.find_peaks(
+        [(1, 0, 3), (2, 3, 4), (3, 4, 5), (0, 1, 0)]
+    )
+    assert peaks == [(3, 4, 5)]
