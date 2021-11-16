@@ -28,15 +28,39 @@ def find_peaks(list_of_intensities):
 
     """
     maxima_list = []
-    for step in range(len(list_of_intensities)):
-        if step == 0:
-            if list_of_intensities[step] > list_of_intensities[step+1]:
-                maxima_list.append(list_of_intensities[step])
-        if step == len(list_of_intensities):
-            if list_of_intensities[step] > list_of_intensities[step-1]:
-                maxima_list.append(list_of_intensities[step])
-        if (step != 0) & (step != len(list_of_intensities)):
-            if list_of_intensities[step-1] < list_of_intensities[step] > list_of_intensities[step+1]:
-                maxima_list.append(list_of_intensities[step])
+    tuple_check = all([isinstance(element, tuple) for element in list_of_intensities])
+    int_check = all([isinstance(element, int) for element in list_of_intensities])
+
+    if int_check:
+        for step in range(len(list_of_intensities)):
+            if step == 0:
+                if list_of_intensities[step] > list_of_intensities[step+1]:
+                    maxima_list.append(list_of_intensities[step])
+            if step == (len(list_of_intensities)-1):
+                if list_of_intensities[step] > list_of_intensities[step-1]:
+                    maxima_list.append(list_of_intensities[step])
+            if (step != 0) and (step != (len(list_of_intensities)-1)):
+                if list_of_intensities[step-1] < list_of_intensities[step] > list_of_intensities[step+1]:
+                    maxima_list.append(list_of_intensities[step])
+
+    def tuple_sum (element):
+        sum = 0
+        for pos in range(len(element)):
+            sum += element[pos]
+        return sum
+
+    if tuple_check:
+        for step in range(len(list_of_intensities)):
+            tuple_sum(list_of_intensities[step])
+        
+            if step == 0:
+                if tuple_sum(list_of_intensities[step]) > tuple_sum(list_of_intensities[step+1]):
+                    maxima_list.append(list_of_intensities[step])
+            if step == (len(list_of_intensities)-1):
+                if tuple_sum(list_of_intensities[step]) > tuple_sum(list_of_intensities[step-1]):
+                    maxima_list.append(list_of_intensities[step])
+            if (step != 0) and (step != (len(list_of_intensities)-1)):
+                if tuple_sum(list_of_intensities[step-1]) < tuple_sum(list_of_intensities[step]) > tuple_sum(list_of_intensities[step+1]):
+                    maxima_list.append(list_of_intensities[step])
 
     return maxima_list
