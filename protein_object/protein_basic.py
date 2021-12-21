@@ -26,10 +26,9 @@ class Protein (object):
                     a = 0
                 else:
                     stripped_line = line.strip("\n")
-
-                    stripped_line = stripped_line.encode("ascii", "replace")
-                    stripped_line = stripped_line.decode()
-
+                    #find non ASCII characters
+                    stripped_line.encode().decode('ascii')
+                    
                     self.sequenz += str(stripped_line)
         
 
@@ -54,10 +53,10 @@ class Protein (object):
                 value = value[0]
             else:
                 value = np.nan
-            property_list.append((value,self.sequenz[i]))
+            property_list.append(value)
         return property_list
 
-
+    
 
     def plot(self, property="hydropathy index (Kyte-Doolittle method)", window_size=5):
         """Create plotly fig object.

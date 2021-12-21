@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import numpy as np
+import unittest
 # -------- START of inconvenient addon block --------
 # This block is not necessary if you have installed your package
 # using e.g. pip install -e (requires setup.py)
@@ -42,25 +43,32 @@ def test_protein_list_0():
 def test_protein_list_1():
     protein = Protein("1_test.fasta")
     protein_list = protein.get_property_list()
-    assert protein_list == [1.9]
-
-def test_protein_list_MGÖÄL():
-    protein = Protein("MGÖÄL_test copy.fasta")
-    protein_list = protein.get_property_list()
     with open("error.txt", 'w') as error_log:
         error_log.write("WtestW")
         error_log.write("\n")
         error_log.write(str(protein_list))
         error_log.write("\n")
         error_log.write(str(len(protein.get_property_list())))
+    assert protein_list == [1.9]
 
-    assert protein_list == [1.9, -0.4, np.nan, np.nan, 3.8]
 
-def test_protein_plot_MGÖÄL():
-    protein = Protein("MGÖÄL_test copy.fasta")
-    plot = protein.plot(window_size=1)
-    plot.show()
-    assert not plot is None
+def test_protein_list_MGÖÄL():
+    try:
+        protein = Protein("MGÖÄL_test copy.fasta")
+        protein_list = protein.get_property_list()
+    except UnicodeDecodeError:
+        test_worked = True
+    else: 
+        test_worked = False
+    '''with open("error.txt", 'w') as error_log:
+        error_log.write("WtestW")
+        error_log.write("\n")
+        error_log.write(str(protein_list))
+        error_log.write("\n")
+        error_log.write(str(len(protein.get_property_list())))'''
+    assert test_worked == True
+
+
 
 def test_protein_plot_1():
     protein = Protein("1_test.fasta")
